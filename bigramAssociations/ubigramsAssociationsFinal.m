@@ -1,4 +1,4 @@
-
+addpath('..');
 data = getDataSample();
 
 %%%%%% temporarily remove this person with high SV count
@@ -140,6 +140,5 @@ set(h,'Units','Inches');
 pos = get(h,'Position');
 
 set(h,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)]);
-%saveas(h, strcat('figure-consecutive-assoc-basic-test', num2str(test),'.pdf'));
-saveas(h, strcat('figure-consecutive-assoc-basicTEST-baseline', num2str(j),'.pdf'));
+saveas(h, strcat('../figure-ubigram-assoc', num2str(j),'.pdf'));
 

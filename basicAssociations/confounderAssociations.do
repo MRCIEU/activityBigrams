@@ -1,7 +1,7 @@
 
 * module add apps/stata14 
 
-insheet using "../data/datasetWithInSampleForStataV3.csv", clear
+insheet using "../../data/derived/datasetWithInSampleForStataV3.csv", clear
 
 
 *** AGE

@@ -5,10 +5,10 @@
 %% read in each persons data, keep only first 7 days and recode missingness
 
 
-files = dir('../data/F11-processed/*.csv');
+files = dir('../.../data/F11-processed/*.csv');
 
-file1 = '../data/alspac-7days-missingRecoded.csv';
-file2 = '../data/alspac-7days-discretised.csv';
+file1 = '../../data/derived/accel/alspac-7days-missingRecoded.csv';
+file2 = '../../data/derived/accel/alspac-7days-discretised.csv';
 
 % make new files
 fid = fopen(file1,'w');
@@ -31,7 +31,7 @@ for file=files'
                 qlet = 3;
         end
 	
-	x = dlmread(strcat('../data/F11-processed/',file.name));
+	x = dlmread(strcat('../../data/derived/accel/F11-processed/',file.name));
 
 	% make into 1 long row
 	seq = reshape(x',1,size(x,1)*size(x,2));

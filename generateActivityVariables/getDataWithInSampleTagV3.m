@@ -3,6 +3,7 @@
 phenotypes = dataset('file', '../data/myvars-for-bigramsV2.csv', 'delimiter', ',');
 
 % our sample
+addpath('..');
 data = getDataSample();
 data(:,'insample') = mat2dataset(repmat(1,size(data,1),1));
 
@@ -19,6 +20,6 @@ C.insample(ix) = 0;
 size(find(isnan(C.insample)))
 size(find(C.insample == 0))  
 
-export(C, 'file', '../data/datasetWithInSampleForStataV3.csv', 'delimiter', ',');
+export(C, 'file', '../../data/derived/datasetWithInSampleForStataV3.csv', 'delimiter', ',');
 
 

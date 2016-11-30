@@ -1,8 +1,8 @@
 
 
-f1 = '../data/alspac-7days-discretised.csv';
+f1 = '../../data/derived/accel/alspac-7days-discretised.csv';
 seqDiscretised = dlmread(f1);
-f2 = '../data/alspac-7days-missingRecoded.csv';
+f2 = '../../data/derived/accel/alspac-7days-missingRecoded.csv';
 seqMissRec = dlmread(f2);
 
 
@@ -65,7 +65,7 @@ ds2.Properties.VarNames = {'aln', 'qlet', 'countMissing', 'countSed','countLow',
 
 ds = join(ds1, ds2, {'aln', 'qlet'});
 
-export(ds, 'file','../data/activity-phenotypes.csv', 'delimiter', ',');
+export(ds, 'file','../../data/derived/activity-phenotypes.csv', 'delimiter', ',');
 
 
 

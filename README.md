@@ -28,6 +28,7 @@ The code assumes there is a data folder in the parent directory of this git dir 
 ../data/original/alspac/kz_5b.dta
 ../data/derived/
 ../data/derived/accel/
+../data/derived/accel/F11-processed/
 ../data/derived/alspac/
 ```
 
@@ -43,7 +44,8 @@ We perform the following preprocessing:
 1. Remove the header of the accelerometer data files
 
 	```bash
-	sh accelDataProcessing/dat-file-preprocessing.sh
+	cd accelDataProcessing/
+	sh dat-file-preprocessing.sh
 	```
 
 2. Combine the accelerometer data into a single file
@@ -51,18 +53,21 @@ We perform the following preprocessing:
 4. Discretise activity levels to categories: sedentary=0, low=1, moderate=2, vigorous=3
 
 ```bash 
-matlab -r "accelDataProcessing/combineParticipantsRecodeMissing"
+cd accelDataProcessing/
+matlab -r "combineParticipantsRecodeMissing"
 ```
 
 Optional: plot a participants discretised sequence
 
 ```bash
-matlab -r "accelDataProcessing/plot-persons-accelerometer-data"
+cd accelDataProcessing/
+matlab -r "plotPersonsAccelerometerData"
 ```
 
 ### 1b. Collate necessary data from ALSPAC data files
 
 ```bash
+cd alspacDataProcessing/
 stata -b prepare-alspac-variables.do
 ```
 
@@ -70,6 +75,7 @@ We also create a dataset version containing all people who attended the age 11 c
 between those in our sample, and those who attended the age 11 clinic but are not in our sample.
 
 ```bash
+cd alspacDataProcessing/
 stata -b prepare-alspac-variables-allN.do
 ```
 
@@ -86,7 +92,8 @@ The following variables are generated:
 4. activity bigrams: the frequency
 
 ```bash
-qsub generateActivityVariables/j-gen-vars.sh
+cd generateActivityVariables/
+qsub j-gen-vars.sh
 ```
 
 ## 3) Combine these with other traits from ALSPAC (i.e. BMI and confounding factors)
@@ -96,6 +103,7 @@ Make a single dataset with our derived PA variables, and other ALSPAC variables 
 The file that's created in the data folder is called main-dataset.csv
 
 ```bash
+cd generateActivityVariables/
 matlab -r combineDatasets
 ```
 
@@ -105,12 +113,14 @@ We create a dataset to perform the confounder analysis. This is different from t
 contains all the participants that came to the F11 clinic.
 
 ```bash
+cd generateActivityVariables/
 matlab -r getDataWithInSampleTag
 ```
 
 Perform the confounder associations:
 
 ```bash
+cd basicAssociations/
 stata -b do confounderAssociations.do
 ```
 
@@ -122,7 +132,8 @@ Results are stored in unigram-assoc.csv and as a figure (figure-unigram-assoc.pd
 
 
 ```bash
-matlab -r basicAssociations/priorAssociationsFinal
+cd basicAssociations/
+matlab -r priorAssociationsFinal
 ```
 
 ## 5) Tests of mCPM and mSD with BMI
@@ -132,7 +143,8 @@ Runs tests of association of mCPM and mSD with BMI. See paper for analysis detai
 Results are stored in mCPM-mSD-assoc.csv and as a figure (figure-mCPM-vCPM.pdf).
 
 ```bash
-matlab -r basicAssociations/associationsmCPM
+cd basicAssociations/
+matlab -r associationsmCPM
 ```
 
 ## 6) Tests of bigrams with BMI
@@ -142,7 +154,8 @@ Runs tests of association of bigrams with BMI. See paper for analysis details.
 Results	are stored in bigram-assoc.csv and as a figure (figure-bigram-assoc.pdf).
 
 ```bash
-matlab -r bigramAssociations/bigramAssociationsFinal
+cd bigramAssociations/
+matlab -r bigramAssociationsFinal
 ```
 
 ## 7) Tests of unordered bigrams (u-bigrams) with BMI
@@ -152,7 +165,8 @@ Runs tests of association of u-bigrams with BMI. See paper for analysis details.
 Results are stored in ubigram-assoc.csv and as a figure (figure-ubigram-assoc.pdf).
 
 ```bash
-matlab -r bigramAssociations/ubigramsAssociationsFinal
+cd bigramAssociations
+matlab -r ubigramsAssociationsFinal
 ```
 
 We also looked at associations in terms of a standard deviation change of the baseline bigram, where the
@@ -160,21 +174,24 @@ SD of the baseline < SD of the comparison bigram.
 
 
 ```bash
-matlab -r bigramAssociations/ubigramsAssociationsSDFinal
+cd bigramAssociations/
+matlab -r ubigramsAssociationsSDFinal
 ```
 
 
 ## 8) Plot bigram distibutions (histograms)
 
 ```bash
-matlab -r postAnalysis/plotDistributions
+cd postAnalysis/
+matlab -r plotDistributions
 ```
 
 ## 9) Plot relationship between the frequency of bigrams vs the frequency of unigrams
 
 
 ```bash
-matlab -r postAnalysis/compareBigramsUnigrams2
+cd postAnalysis/
+matlab -r compareBigramsUnigrams2
 ```
 
 

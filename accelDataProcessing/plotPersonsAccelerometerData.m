@@ -1,4 +1,4 @@
-files = dir('../data/F11-processed/*.csv');
+files = dir('../../data/derived/accel/F11-processed/*.csv');
 
 idx=1;
 aln=files(idx).name;
@@ -21,5 +21,5 @@ set(gca,'XTickLabel',{'1','2','3','4','5','6','7'});
 %set(gcf, 'color', 'none');
 %export_fig strcat('x',userId,'.pdf')
 
-saveas(h, strcat('x',userId,'.pdf'));
+saveas(h, strcat('../out/accel-',userId,'.pdf'));
 

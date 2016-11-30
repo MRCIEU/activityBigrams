@@ -1,4 +1,4 @@
-
+addpath('..');
 data = getDataSample();
 
 % here bigrams are consecutive pairs (i.e. unordered adjacent activity states)
@@ -119,5 +119,5 @@ set(h,'Units','Inches');
 pos = get(h,'Position');
 
 set(h,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)]);
-saveas(h, strcat('figure-ubigram-assoc-SD-baseline', num2str(j),'.pdf'));
+saveas(h, strcat('../out/figure-ubigram-assoc-SD', num2str(j),'.pdf'));
 

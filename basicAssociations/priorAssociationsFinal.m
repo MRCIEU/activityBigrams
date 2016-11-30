@@ -1,4 +1,5 @@
 
+addpath('..');
 data = getDataSample();
 
 confounders = data(:,{'ethnicity', 'parity', 'matSmPreg', 'hhsoc', 'mated', 'sex', 'age11'});
@@ -81,4 +82,4 @@ set(h,'Units','Inches');
 pos = get(h,'Position');
 
 set(h,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)]);
-saveas(h, 'figure-unigram-assoc2.pdf');
+saveas(h, '../out/figure-unigram-assoc.pdf');

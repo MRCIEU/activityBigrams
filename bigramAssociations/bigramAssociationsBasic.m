@@ -6,6 +6,7 @@
 ### decrease in freq of another bigram - this is what we look at in the paper.
 
 
+addpath('..');
 data = getDataSample();
 
 % here bigrams are consecutive pairs (i.e. unordered adjacent activity states)
@@ -62,5 +63,5 @@ set(h,'Units','Inches');
 pos = get(h,'Position');
 
 set(h,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)]);
-saveas(h, 'figure-bigram-assoc-basic.pdf');
+saveas(h, '../out/figure-bigram-assoc-basic.pdf');
 

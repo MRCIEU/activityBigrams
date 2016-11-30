@@ -1,4 +1,5 @@
 
+addpath('..');
 data = getDataSample();
 
 data.mVar = data.mSD.^2;
@@ -111,5 +112,5 @@ set(h,'Units','Inches');
 pos = get(h,'Position');
 
 set(h,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)]);
-saveas(h, strcat('figure-bigram-assoc-basicTEST-baseline', num2str(j),'.pdf'));
+saveas(h, strcat('../out/figure-bigram-assoc', num2str(j),'.pdf'));
 

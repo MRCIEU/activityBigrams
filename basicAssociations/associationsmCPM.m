@@ -1,5 +1,5 @@
 
-
+addpath('..');
 data = getDataSample();
 
 data.mVar = data.mSD.^2;
@@ -84,4 +84,4 @@ h=figure;
 plot(data.mCPM, data.mVar, '.');
 xlabel('mCPM');
 ylabel('vCPM');
-saveas(h, 'figure-mCPM-vs-vCPM.pdf');    
+saveas(h, '../out/figure-mCPM-vCPM.pdf');
