@@ -42,9 +42,9 @@ We perform the following preprocessing:
 
 1. Remove the header of the accelerometer data files
 
-```bash
-sh accelDataProcessing/dat-file-preprocessing.sh
-```
+	```bash
+	sh accelDataProcessing/dat-file-preprocessing.sh
+	```
 
 2. Combine the accelerometer data into a single file
 3. Recode sequences of >=60 consecutive zeros to missing (value -1)
@@ -96,7 +96,7 @@ Make a single dataset with our derived PA variables, and other ALSPAC variables 
 The file that's created in the data folder is called main-dataset.csv
 
 ```bash
-matlab -r combinedatasets
+matlab -r combineDatasets
 ```
 
 ## 4) Tests of confounding factors for those in sample vs those not in sample
@@ -104,7 +104,9 @@ matlab -r combinedatasets
 We create a dataset to perform the confounder analysis. This is different from the main dataset because it
 contains all the participants that came to the F11 clinic.
 
-matlab -r getDataWithInSampleTag.m
+```bash
+matlab -r getDataWithInSampleTag
+```
 
 Perform the confounder associations:
 
@@ -120,7 +122,7 @@ Results are stored in unigram-assoc.csv and as a figure (figure-unigram-assoc.pd
 
 
 ```bash
-matlab -r basicAssociations/priorAssociationsFinal.m
+matlab -r basicAssociations/priorAssociationsFinal
 ```
 
 ## 5) Tests of mCPM and mSD with BMI
@@ -130,7 +132,7 @@ Runs tests of association of mCPM and mSD with BMI. See paper for analysis detai
 Results are stored in mCPM-mSD-assoc.csv and as a figure (figure-mCPM-vCPM.pdf).
 
 ```bash
-matlab -r basicAssociations/associations-mcpm.m
+matlab -r basicAssociations/associationsmCPM
 ```
 
 ## 6) Tests of bigrams with BMI
@@ -140,7 +142,7 @@ Runs tests of association of bigrams with BMI. See paper for analysis details.
 Results	are stored in bigram-assoc.csv and as a figure (figure-bigram-assoc.pdf).
 
 ```bash
-matlab -r bigramAssociations/bigramAssociationsFinal.m
+matlab -r bigramAssociations/bigramAssociationsFinal
 ```
 
 ## 7) Tests of unordered bigrams (u-bigrams) with BMI
@@ -150,20 +152,29 @@ Runs tests of association of u-bigrams with BMI. See paper for analysis details.
 Results are stored in ubigram-assoc.csv and as a figure (figure-ubigram-assoc.pdf).
 
 ```bash
-matlab -r bigramAssociations/consecutiveAssociationsFinal.m
+matlab -r bigramAssociations/ubigramsAssociationsFinal
 ```
+
+We also looked at associations in terms of a standard deviation change of the baseline bigram, where the
+SD of the baseline < SD of the comparison bigram. 
+
+
+```bash
+matlab -r bigramAssociations/ubigramsAssociationsSDFinal
+```
+
 
 ## 8) Plot bigram distibutions (histograms)
 
 ```bash
-matlab -r postAnalysis/plotDistributions.m
+matlab -r postAnalysis/plotDistributions
 ```
 
 ## 9) Plot relationship between the frequency of bigrams vs the frequency of unigrams
 
 
 ```bash
-matlab -r postAnalysis/compareBigramsUnigrams2.m
+matlab -r postAnalysis/compareBigramsUnigrams2
 ```
 
 
