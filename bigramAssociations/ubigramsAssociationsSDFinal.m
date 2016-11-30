@@ -2,15 +2,12 @@ addpath('..');
 data = getDataSample();
 
 % here bigrams are consecutive pairs (i.e. unordered adjacent activity states)
-
 bigrams = [data.missmiss data.missS+data.Smiss data.missL+data.Lmiss data.missM+data.Mmiss data.missV+data.Vmiss data.SS data.SL+data.LS data.SM+data.MS data.SV+data.VS data.LL data.LM+data.ML data.LV+data.VL data.MM data.MV+data.VM  data.VV];
 bigrams = mat2dataset(bigrams);
-%bigrams.Properties.VarNames = {'miss,miss', 'missS,Smiss', 'missL,Lmiss', 'missM,Mmiss', 'missV,Vmiss', 'SS','SL,LS','SM,MS','SV,VS','LL','LM,ML','LV,VL','MM','MV,VM','VV'};
 myVarNames = {'miss/miss', 'missS/Smiss', 'missL/Lmiss', 'missM/Mmiss', 'missV/Vmiss', '[SS]','[SL]','[SM]','[SV]','[LL]','[LM]','[LV]','[MM]','[MV]','[VV]'};
 confounders = data(:,{'ethnicity', 'parity', 'matSmPreg', 'hhsoc', 'mated', 'sex', 'age11'});
 
 bigramSDs = std(double(bigrams));
-bigramSDs(6:end)
 
 h=figure('units','inches','position',[.1 .1 12 4.8]);
 plot([1 10], [0 0], '--', 'color', 'black');
@@ -27,6 +24,9 @@ markersx = {'o';'x';'s';'*'};
 markersizex = [10;10;10;10;10];
 numBigrams=size(bigrams,2);
 
+fileID = fopen('../out/ubigram-assoc-SD.csv','w');
+fprintf(fileID, 'Baseline \t Comparison \t Model \t Beta test1 \t CIlow, CIhigh test1 \t Beta test2 \t CIlow, CIhigh test2 \t Beta test3 \t CIlow, CIhigh test3 \t Beta test4 \t CIlow, CIhigh test4 \n');
+
 for j=6:size(bigrams,2) % baseline
 
 	count = 1;
@@ -37,7 +37,7 @@ for j=6:size(bigrams,2) % baseline
 			continue;
 		end
 
-		fprintf('%s \t %s \t', myVarNames{j}, myVarNames{i});
+		fprintf(fileID, '%s \t %s \t', myVarNames{j}, myVarNames{i});
 
 		for test=1:4
 
@@ -75,24 +75,23 @@ for j=6:size(bigrams,2) % baseline
 		if (baselineBigramSD<=comparisonBigramSD)
 			B = B*baselineBigramSD; BINT = BINT*baselineBigramSD;
 
-			fprintf('%.3f [%.3f, %.3f] \t', B(1), BINT(1,1), BINT(1,2));
+			fprintf(fileID, '%.3f [%.3f, %.3f] \t', B(1), BINT(1,1), BINT(1,2));
 			hold on; plot([count+test*0.18 count+test*0.18], [BINT(1,1) BINT(1,2)], 'color', colorx{test}, 'linewidth', 3);
 			hold on;plot(count+test*0.18, B(1), markersx{test}, 'markersize', markersizex(test), 'color', colorx{test}, 'linewidth', 3, 'MarkerEdgeColor', 'black'); 
 		end
 	
 		end % end for loop
 
-		fprintf('\n');	
+		fprintf(fileID, '\n');	
 
 		count = count + 1;
 	end
 
-	%fprintf('\n');
-
+	% save figure for this baseline and start new figure for next baseline
 	set(h,'Units','Inches');
 	pos = get(h,'Position');
 	set(h,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)]);
-	saveas(h, strcat('figure-ubigram-assoc-SD-baseline', num2str(j),'.pdf'));
+	saveas(h, strcat('../out/figure-ubigram-assoc-SD', num2str(j),'.pdf'));
 
 	if (j<size(bigrams,2))
 		if (j==size(bigrams,2)-1) % last new figure
@@ -114,6 +113,7 @@ for j=6:size(bigrams,2) % baseline
 	end
 end
 
+fclose(fileID);
 
 set(h,'Units','Inches');
 pos = get(h,'Position');

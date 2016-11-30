@@ -28,6 +28,9 @@ data.countVig = data.countVig/7;
 
 unigrams = data(:,{'countSed', 'countLow', 'countMod', 'countVig', 'countMissing'});
 
+fileID = fopen('../out/unigram-assoc.csv','w');
+fprintf(fileID, 'Baseline \t Comparison \t Model \t Beta \t CIlow, CIhigh\n');
+
 for i=1:4
 
 	count = 1;
@@ -60,7 +63,7 @@ for i=1:4
 		[B,BINT,R,RINT,STATS] = regress(data.bmi11, [double(indVar) double(sumOther) repmat(1,size(data.bmi11, 1), 1)]);
 		B = B*10; BINT = BINT*10;
 	
-		fprintf('%s \t %s \t Model 1 \t %.3f \t %.3f, %.3f \n', char(unigrams.Properties.VarNames(i)), char(unigrams.Properties.VarNames(j)), B(1), BINT(1,1), BINT(1,2));
+		fprintf(fileID, '%s \t %s \t Model 1 \t %.3f \t %.3f, %.3f \n', char(unigrams.Properties.VarNames(i)), char(unigrams.Properties.VarNames(j)), B(1), BINT(1,1), BINT(1,2));
 		hold on;plot(i+count*0.25, B(1), 'o', 'color', colorx{1}, 'markersize', 10);
 		hold on;plot([i+count*0.25 i+count*0.25], BINT(1,:), '-', 'color', colorx{1});
 	
@@ -69,7 +72,7 @@ for i=1:4
 		[B,BINT,R,RINT,STATS] = regress(data.bmi11, [double(indVar) double(sumOther) double(confounders) repmat(1,size(data.bmi11, 1), 1)]);
         	B = B*10; BINT = BINT*10;
 	
-        	fprintf('%s \t %s \t Model 2 \t %.3f \t %.3f, %.3f \n', char(unigrams.Properties.VarNames(i)), char(unigrams.Properties.VarNames(j)), B(1), BINT(1,1), BINT(1,2));
+        	fprintf(fileID, '%s \t %s \t Model 2 \t %.3f \t %.3f, %.3f \n', char(unigrams.Properties.VarNames(i)), char(unigrams.Properties.VarNames(j)), B(1), BINT(1,1), BINT(1,2));
         	hold on;plot(i+count*0.25+0.1, B(1), 'x', 'color', colorx{2}, 'markersize', 10);
      		hold on;plot([i+count*0.25+0.1 i+count*0.25+0.1], BINT(1,:), '-', 'color', colorx{2});
 
@@ -78,8 +81,10 @@ for i=1:4
 
 end
 
+fclose(fileID);
+
+% plot figure
 set(h,'Units','Inches');
 pos = get(h,'Position');
-
 set(h,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)]);
 saveas(h, '../out/figure-unigram-assoc.pdf');

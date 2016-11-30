@@ -32,17 +32,14 @@ save "../../data/derived/alspac/sex.dta"
 use "../../data/derived/alspac/bmi11.dta"
 merge m:1 aln using "../../data/derived/alspac/vars-32wksgest.dta"
 drop if _merge ==2
-*drop if _merge ==1
 drop _merge
 
 merge m:1 aln using "../../data/derived/alspac/vars-18wksgest.dta"
 drop if _merge ==2
-*drop if _merge ==1
 drop _merge
 
 merge m:1 aln qlet using "../../data/derived/alspac/sex.dta"
 drop if _merge ==2
-*drop if _merge ==1
 drop _merge
 
 * age
@@ -103,7 +100,7 @@ rename qletF qlet
 drop b6* b7* smok16wks smok32wks c482 c645
 
 *outsheet using  "/Volumes/Filestore/My Files/Student Filestore/lm0423/TEMP/myvars-for-bigrams.csv", comma nolabel replace
-outsheet using  "../../data/derived/alspac/myvars-for-bigramsV2.csv", comma nolabel replace
+outsheet using  "../../data/derived/alspac/alspac-variables.csv", comma nolabel replace
 
 END
 

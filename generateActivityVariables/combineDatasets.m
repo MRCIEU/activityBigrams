@@ -3,7 +3,7 @@
 
 pa=dataset('file','../../data/derived/activity-phenotypes.csv', 'delimiter', ',');
 
-phenotypes = dataset('file', '../../data/derived/alspac/myvars-for-bigrams.csv', 'delimiter', ',');
+phenotypes = dataset('file', '../../data/derived/alspac/alspac-variables.csv', 'delimiter', ',');
 
 % fix different encoding for qlet
 phenotypes.qlet = phenotypes.qlet - 1;

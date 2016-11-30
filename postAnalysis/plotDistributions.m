@@ -1,10 +1,12 @@
 
+addpath('..');
 data = getDataSample();
-
-%bigrams = data(:, {'missmiss', 'missS', 'missL', 'missM', 'missV', 'Smiss', 'SS', 'SL', 'SM', 'SV', 'Lmiss', 'LS', 'LL', 'LM', 'LV', 'Mmiss', 'MS', 'ML', 'MM', 'MV', 'Vmiss', 'VS', 'VL', 'VM', 'VV'});
 
 % no missing states
 bigrams = data(:, {'SS', 'SL', 'SM', 'SV','LS', 'LL', 'LM', 'LV','MS', 'ML', 'MM', 'MV','VS', 'VL', 'VM', 'VV'});
+
+%%
+%% bigram distributions
 
 h=figure;
 i=4;j=4;
@@ -17,22 +19,26 @@ for k=1:size(bigrams,2)
 	xlabel('mins/day');
 end
 
-saveas(h, 'figure-bigramDistributions.pdf');
+saveas(h, '../out/figure-bigramDistributions.pdf');
 
-xxxxxx
+
+%%
+%% ubigram distributions
 
 h=figure;
 i=4;j=4;
 
-bigrams = [data.missmiss data.missS+data.Smiss data.missL+data.Lmiss data.missM+data.Mmiss data.missV+data.Vmiss data.SS data.SL+data.LS data.SM+data.MS data.SV+data.VS data.LL data.LM+data.ML data.LV+data.VL data.MM data.MV+data.VM  data.VV];
+ubigrams = [data.SS data.SL+data.LS data.SM+data.MS data.SV+data.VS data.LL data.LM+data.ML data.LV+data.VL data.MM data.MV+data.VM  data.VV];
+ubigrams = mat2dataset(ubigrams);
+ubigrams.Properties.VarNames = {'SS', 'SL', 'SM', 'SV', 'LL', 'LM', 'LV', 'MM', 'MV', 'VV'};  
 
-for k=1:size(bigrams,2)
+for k=1:size(ubigrams,2)
         subplot(i,j,k);
-        hist(double(bigrams(:,k)));
-	ylabel(bigrams.Properties.VarNames{k});
+        hist(double(ubigrams(:,k)));
+	ylabel(ubigrams.Properties.VarNames{k});
 end
 
-saveas(h, 'figure-consecutiveDistributions.pdf');
+saveas(h, '../out/figure-ubigramDistributions.pdf');
 
 
 

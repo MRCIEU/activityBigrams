@@ -24,7 +24,8 @@ markersx = {'o';'x';'s';'*'};
 markersizex = 10;
 numBigrams=size(bigrams,2);
 
-
+fileID = fopen('../out/bigram-assoc.csv','w');
+fprintf(fileID, 'Baseline \t Comparison \t Model \t Beta test1 \t CIlow, CIhigh test1 \t Beta test2 \t CIlow, CIhigh test2 \t Beta test3 \t CIlow, CIhigh test3 \t Beta test4 \t CIlow, CIhigh test4 \n');
 
 for j=10:size(bigrams,2) % baseline
 
@@ -36,7 +37,7 @@ for j=10:size(bigrams,2) % baseline
 			continue;
 		end
 
-		fprintf('%s \t %s \t', bigrams.Properties.VarNames{j}, bigrams.Properties.VarNames{i});
+		fprintf(fileID, '%s \t %s \t', bigrams.Properties.VarNames{j}, bigrams.Properties.VarNames{i});
 
 		for test=1:4
 
@@ -69,14 +70,13 @@ for j=10:size(bigrams,2) % baseline
 
 		B = B*10; BINT = BINT*10;
 
-		fprintf('%.3f [%.3f, %.3f] \t', B(1), BINT(1,1), BINT(1,2));
-		%fprintf(' %s test %d: b=%.3f [%.3f, %.3f] n=%d \n', char(bigrams.Properties.VarNames(:,i)), test, B(1), BINT(1,1), BINT(1,2), size(data,1));
+		fprintf(fileID, '%.3f [%.3f, %.3f] \t', B(1), BINT(1,1), BINT(1,2));
 		hold on; plot([count+test*0.18 count+test*0.18], [BINT(1,1) BINT(1,2)], 'color', colorx{test}, 'linewidth', 3);
-		hold on;plot(count+test*0.18, B(1), markersx{test}, 'markersize', markersizex, 'color', colorx{test}, 'linewidth', 3, 'MarkerEdgeColor', 'black');
+		hold on; plot(count+test*0.18, B(1), markersx{test}, 'markersize', markersizex, 'color', colorx{test}, 'linewidth', 3, 'MarkerEdgeColor', 'black');
                 		
 		end
 
-		fprintf('\n');	
+		fprintf(fileID, '\n');	
 
 		count = count + 1;
 	end
@@ -84,7 +84,7 @@ for j=10:size(bigrams,2) % baseline
 	set(h,'Units','Inches');
 	pos = get(h,'Position');
 	set(h,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)]);
-	saveas(h, strcat('figure-bigram-assoc-basicTEST-baseline', num2str(j),'.pdf'));
+	saveas(h, strcat('../out/figure-bigram-assoc', num2str(j),'.pdf'));
 
 
 	if (j<size(bigrams,2))
@@ -107,7 +107,10 @@ for j=10:size(bigrams,2) % baseline
 	end
 end
 
+fclose(fileID);
 
+
+% figure
 set(h,'Units','Inches');
 pos = get(h,'Position');
 

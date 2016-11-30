@@ -1,6 +1,5 @@
 
-
-%data = dataset('file', '../data/main-dataset.csv', 'delimiter', ',');
+addpath('..');
 data = getDataSample();
 
 %% just so the values we use below are per day not per week
@@ -61,7 +60,7 @@ imagesc(centers{:,2},centers{:,1}, values);; axis xy; colormap(map);colorbar;
 xlabel('Count sedentary');
 ylabel('Bigram VS');
 
-saveas(h, 'figure-sedentary-bigram-unigram-comp2.pdf');
+saveas(h, '../out/figure-sedentary-bigram-unigram-comp.pdf');
 
 %%%%%%%%%
 %%%%%%%%%
@@ -116,7 +115,7 @@ imagesc(centers{:,2},centers{:,1}, values);; axis xy; colormap(map);colorbar;
 xlabel('Count low');
 ylabel('Bigram VL');
 
-saveas(h, 'figure-low-bigram-unigram-comp2.pdf');
+saveas(h, '../out/figure-low-bigram-unigram-comp.pdf');
 
 %%%%%%%%%
 %%%%%%%%%
@@ -171,7 +170,7 @@ imagesc(centers{:,2},centers{:,1}, values);; axis xy; colormap(map);colorbar;
 xlabel('Count mod');
 ylabel('Bigram VM');
 
-saveas(h, 'figure-moderate-bigram-unigram-comp2.pdf');
+saveas(h, '../out/figure-moderate-bigram-unigram-comp.pdf');
 
 %%%%%%%%%
 %%%%%%%%%
@@ -226,6 +225,6 @@ imagesc(centers{:,2},centers{:,1}, values);; axis xy; axis tight; colormap(map);
 xlabel('Count vig');
 ylabel('Bigram MV');
 
-saveas(h, 'figure-vigorous-bigram-unigram-comp2.pdf');
+saveas(h, '../out/figure-vigorous-bigram-unigram-comp.pdf');
 
 

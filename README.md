@@ -9,12 +9,13 @@ Millard, L.A.C, et al, Physical activity phenotyping with activity bigrams, and 
 
 ## General requirements
 
-Analysis was performed with matlab-r2015a.
+Analysis was performed with matlab-r2015a and stata14.
 
 To run on blue crystal use:
 
 ```bash
 module add apps/matlab-r2015a
+module add apps/stata14
 ```
 
 The code assumes there is a data folder in the parent directory of this git dir that contains the following structure and contents:
@@ -54,32 +55,24 @@ We perform the following preprocessing:
 
 ```bash 
 cd accelDataProcessing/
-matlab -r "combineParticipantsRecodeMissing"
+matlab -r combineParticipantsRecodeMissing
 ```
 
 Optional: plot a participants discretised sequence
 
 ```bash
 cd accelDataProcessing/
-matlab -r "plotPersonsAccelerometerData"
+matlab -r plotPersonsAccelerometerData
 ```
 
 ### 1b. Collate necessary data from ALSPAC data files
 
-```bash
-cd alspacDataProcessing/
-stata -b prepare-alspac-variables.do
-```
-
-We also create a dataset version containing all people who attended the age 11 clinic - we use this for comparing differences (in confounders)
-between those in our sample, and those who attended the age 11 clinic but are not in our sample.
+Create a file called myvars-for-bigramsV2.csv in `../../data/derived/alspac/`.
 
 ```bash
 cd alspacDataProcessing/
-stata -b prepare-alspac-variables-allN.do
+stata -b prepare-alspac-variables.do nolog
 ```
-
-## 
 
 
 ## 2) Generate physical activity (PA) phenotypes
@@ -113,15 +106,15 @@ We create a dataset to perform the confounder analysis. This is different from t
 contains all the participants that came to the F11 clinic.
 
 ```bash
-cd generateActivityVariables/
-matlab -r getDataWithInSampleTag
+cd confounderAnalysis/
+matlab -r getDataWithInSampleIndicator
 ```
 
 Perform the confounder associations:
 
 ```bash
-cd basicAssociations/
-stata -b do confounderAssociations.do
+cd confounderAnalysis/
+stata -b do confounderAssociations.do nolog
 ```
 
 ## 5) Tests of state priors vs BMI
@@ -136,7 +129,7 @@ cd basicAssociations/
 matlab -r priorAssociationsFinal
 ```
 
-## 5) Tests of mCPM and mSD with BMI
+## 6) Tests of mCPM and mSD with BMI
 
 Runs tests of association of mCPM and mSD with BMI. See paper for analysis details.
 
@@ -147,7 +140,7 @@ cd basicAssociations/
 matlab -r associationsmCPM
 ```
 
-## 6) Tests of bigrams with BMI
+## 7) Tests of bigrams with BMI
 
 Runs tests of association of bigrams with BMI. See paper for analysis details.
 
@@ -158,14 +151,14 @@ cd bigramAssociations/
 matlab -r bigramAssociationsFinal
 ```
 
-## 7) Tests of unordered bigrams (u-bigrams) with BMI
+## 8) Tests of unordered bigrams (u-bigrams) with BMI
 
 Runs tests of association of u-bigrams with BMI. See paper for analysis details.
 
 Results are stored in ubigram-assoc.csv and as a figure (figure-ubigram-assoc.pdf).
 
 ```bash
-cd bigramAssociations
+cd bigramAssociations/
 matlab -r ubigramsAssociationsFinal
 ```
 
@@ -179,19 +172,19 @@ matlab -r ubigramsAssociationsSDFinal
 ```
 
 
-## 8) Plot bigram distibutions (histograms)
+## 9) Plot bigram distibutions (histograms)
 
 ```bash
 cd postAnalysis/
 matlab -r plotDistributions
 ```
 
-## 9) Plot relationship between the frequency of bigrams vs the frequency of unigrams
+## 10) Plot relationship between the frequency of bigrams vs the frequency of unigrams
 
 
 ```bash
 cd postAnalysis/
-matlab -r compareBigramsUnigrams2
+matlab -r compareBigramsUnigrams
 ```
 
 

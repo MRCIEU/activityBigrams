@@ -1,8 +1,9 @@
 
 * module add apps/stata14 
 
-insheet using "../../data/derived/datasetWithInSampleForStataV3.csv", clear
+insheet using "../../data/derived/datasetWithInSampleForStata.csv", clear
 
+log using ../out/confounder-assoc.log
 
 *** AGE
 
@@ -147,3 +148,5 @@ tab matsmpreg if insample == 1
 
 *prtest matsmpreg, by(insample)
 logistic insample matsmpreg
+
+log close

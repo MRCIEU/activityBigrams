@@ -5,7 +5,7 @@
 %% read in each persons data, keep only first 7 days and recode missingness
 
 
-files = dir('../.../data/F11-processed/*.csv');
+files = dir('../../data/derived/accel/F11-processed/*.csv');
 
 file1 = '../../data/derived/accel/alspac-7days-missingRecoded.csv';
 file2 = '../../data/derived/accel/alspac-7days-discretised.csv';
@@ -18,7 +18,7 @@ fclose(fid);
 
 for file=files'
 
-	fprintf(strcat(file.name,'\n'));
+%	fprintf(strcat(file.name,'\n'));
 	[~,userId,~] = fileparts(file.name);
 	aln = str2num(userId(1:size(userId,2)-1));
 	if (size(findstr(userId,'A'),2)==1)
@@ -50,8 +50,7 @@ for file=files'
 		seq3 = discretise(seq2);
 		dlmwrite(file2, [aln qlet seq3], '-append');
 	else
-
-		fprintf(strcat('sequence too short: ', num2str(size(seq,2)), '\n'));
+		fprintf(strcat(file.name, ': sequence too short, length=', num2str(size(seq,2)), '\n'));
 
 	end
 end
