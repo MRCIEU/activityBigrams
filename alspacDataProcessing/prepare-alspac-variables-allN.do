@@ -18,20 +18,20 @@ mated           float   %17.0g     mated      Mother's highest ed qualification
 * Social Class - Maternal (c755)
 * Social Class - Paternal (c765)
 *  Mums highest ed qualification (c645)
-use "/Volumes/data/Current/Quest/Mother/c_7d.dta"
+use "../../data/original/alspac/c_7d.dta"
 keep aln c804 c482 c755 c765 c645
-save "/Volumes/Filestore/My Files/Student Filestore/lm0423/TEMP/vars-32wksgest.dta"
+save "../../data/derived/alspac/vars-32wksgest.dta"
 
 * bmi 11
-use "/Volumes/data/Current/Clinic/Child/f11_4b.dta
+use "../../data/original/alspac/f11_4b.dta
 keep aln qlet fems026a
-save "/Volumes/Filestore/My Files/Student Filestore/lm0423/TEMP/bmi11.dta"
+save "../../data/derived/alspac/bmi11.dta"
 
 * parity (b032)
 * mother smoked in preg  - b665 b667
-use "/Volumes/data/Current/Quest/Mother/b_4d.dta"
+use "../../data/original/alspac/b_4d.dta"
 keep aln b032 b681 b663 b659 b653 b654 b655 b656  b665 b667 b670 b671 b700 b701 b702
-save "/Volumes/Filestore/My Files/Student Filestore/lm0423/TEMP/vars-18wksgest.dta"
+save "../../data/derived/alspac/vars-18wksgest.dta"
 
 
 
@@ -39,11 +39,11 @@ save "/Volumes/Filestore/My Files/Student Filestore/lm0423/TEMP/vars-18wksgest.d
 
 ** ** ** ** ** ** 
 ** combine and generate derived variables
-use "/Volumes/Filestore/My Files/Student Filestore/lm0423/TEMP/bmi11.dta"
-merge m:1 aln using "/Volumes/Filestore/My Files/Student Filestore/lm0423/TEMP/vars-32wksgest.dta"
+use "../../data/derived/alspac/bmi11.dta"
+merge m:1 aln using "../../data/derived/alspac/vars-32wksgest.dta"
 drop _merge
 
-merge m:1 aln using "/Volumes/Filestore/My Files/Student Filestore/lm0423/TEMP/vars-18wksgest.dta"
+merge m:1 aln using "../../data/derived/alspac/vars-18wksgest.dta"
 drop _merge
 
 
@@ -94,5 +94,5 @@ rename qletF qlet
 
 drop b6* b7* smok16wks smok32wks c482 c645
 
-outsheet using  "/Volumes/Filestore/My Files/Student Filestore/lm0423/TEMP/myvars-for-bigrams-allN.csv", comma nolabel replace
+outsheet using  "../../data/derived/alspac/myvars-for-bigrams-allN.csv", comma nolabel replace
 

@@ -1,48 +1,46 @@
 
 
-
-
 * ethnicity (c804), 
 * smoking at 32 wks gestation (c482)
 * Social Class - Maternal (c755)
 * Social Class - Paternal (c765)
 *  Mums highest ed qualification (c645)
-use "/Volumes/data/Current/Quest/Mother/c_7d.dta"
+
+use "../../data/original/alspac/c_7d.dta"
 keep aln c804 c482 c755 c765 c645
-save "/Volumes/Filestore/My Files/Student Filestore/lm0423/TEMP/vars-32wksgest.dta"
+save "../../data/derived/alspac/vars-32wksgest.dta"
 
 * bmi 11
-use "/Volumes/data/Current/Clinic/Child/f11_4b.dta
+use "../../data/original/alspac/f11_4b.dta"
 keep aln qlet fems026a fe003a
-save "/Volumes/lm0423/TEMP/bmi11.dta"
+save "../../data/derived/alspac/bmi11.dta"
 
 * parity (b032)
 * mother smoked in preg  - b665 b667
-use "/Volumes/data/Current/Quest/Mother/b_4d.dta"
+use "../../data/original/alspac/b_4d.dta"
 keep aln b032 b681 b663 b659 b653 b654 b655 b656  b665 b667 b670 b671 b700 b701 b702
-save "/Volumes/Filestore/My Files/Student Filestore/lm0423/TEMP/vars-18wksgest.dta"
-
+save "../../data/derived/alspac/vars-18wksgest.dta"
 
 * sex
-use "/Volumes/data/Current/Other/Sample Definition/kz_5b.dta"
+use "../../data/original/alspac/kz_5b.dta"
 keep aln qlet kz021
-save "/Volumes/lm0423/TEMP/sex.dta"
+save "../../data/derived/alspac/sex.dta"
 
 
 ** ** ** ** ** ** 
 ** combine and generate derived variables
-use "/Volumes/lm0423/TEMP/bmi11.dta"
-merge m:1 aln using "/Volumes/lm0423/TEMP/vars-32wksgest.dta"
+use "../../data/derived/alspac/bmi11.dta"
+merge m:1 aln using "../../data/derived/alspac/vars-32wksgest.dta"
 drop if _merge ==2
 *drop if _merge ==1
 drop _merge
 
-merge m:1 aln using "/Volumes/lm0423/TEMP/vars-18wksgest.dta"
+merge m:1 aln using "../../data/derived/alspac/vars-18wksgest.dta"
 drop if _merge ==2
 *drop if _merge ==1
 drop _merge
 
-merge m:1 aln qlet using "/Volumes/lm0423/TEMP/sex.dta"
+merge m:1 aln qlet using "../../data/derived/alspac/sex.dta"
 drop if _merge ==2
 *drop if _merge ==1
 drop _merge
@@ -105,7 +103,7 @@ rename qletF qlet
 drop b6* b7* smok16wks smok32wks c482 c645
 
 *outsheet using  "/Volumes/Filestore/My Files/Student Filestore/lm0423/TEMP/myvars-for-bigrams.csv", comma nolabel replace
-outsheet using  "/Volumes/lm0423/TEMP/myvars-for-bigramsV2.csv", comma nolabel replace
+outsheet using  "../../data/derived/alspac/myvars-for-bigramsV2.csv", comma nolabel replace
 
 END
 
@@ -129,13 +127,5 @@ tab hhsocclass hhsocX
 tab mated matedX
 
 * mat smoke is wrong
-
-
-
-
-
-
-
-
 
 
