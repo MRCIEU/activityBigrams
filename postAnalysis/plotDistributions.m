@@ -17,9 +17,29 @@ for k=1:size(bigrams,2)
 	set(get(gca,'child'),'FaceColor',[0.9 0.9 0.1], 'EdgeColor','[0.3 0.3 0.3]');
 	title(bigrams.Properties.VarNames{k});
 	xlabel('mins/day');
+	%xlim([0 500]);
+	%ylim([0 5000]);
 end
 
 saveas(h, '../out/figure-bigramDistributions.pdf');
+
+%h=figure;
+%boxplot(double(bigrams)/7, 'Labels', {'SS', 'SL', 'SM', 'SV','LS', 'LL', 'LM', 'LV','MS', 'ML', 'MM', 'MV','VS', 'VL', 'VM', 'VV'}, 'outliersize', 2, 'colors', [0.8 0.3 0.9], 'symbol', '');
+%xlabel('Bigram');
+%ylabel('mins/day');
+%saveas(h, '../out/figure-bigramDistributions-box.pdf')
+
+% bigram summary statistics for paper table
+% iqr
+for i=1:size(bigrams,2) 
+	b = double(bigrams(:,i))/7; 
+	bx = sort(b); 
+	n=size(bx,1); 
+	l=bx(round(n/4));h=bx(round(3*n/4)); 
+	fprintf('%.3f, %.3f \n', l, h); 
+end
+% median
+median(double(bigrams)/7)
 
 
 %%
