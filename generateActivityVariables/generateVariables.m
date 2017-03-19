@@ -22,8 +22,8 @@ for i=1:size(seqMissRec,1)
 
 	% num valid days
 	numValidDays = 0;
-	for i=1:7
-		seqDay = seq(1,1+(i-1)*60*24:i*60*24);
+	for j=1:7
+		seqDay = seq(1,1+(j-1)*60*24:j*60*24);
         	numValidMinutes = size(find(seqDay>=0),2);
         
         	if (numValidMinutes>=8*60)

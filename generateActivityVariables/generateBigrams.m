@@ -7,7 +7,7 @@ function bigrams = generateBigrams(seq)
 
 	prevState = seq(1);
 
-	for j = 1:size(seq,2)
+	for j = 2:size(seq,2)
 
 		currentState = seq(j);
 
