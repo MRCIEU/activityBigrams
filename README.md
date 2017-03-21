@@ -28,13 +28,20 @@ The code assumes there is a data folder in the parent directory of this git dir 
 ../data/original/alspac/f11_4b.dta  
 ../data/original/alspac/kz_5b.dta
 ../data/derived/
-../data/derived/accel/
-../data/derived/accel/F11-processed/
-../data/derived/alspac/
+../data/derived/activityBigrams/
+../data/derived/activityBigrams/accel/
+../data/derived/activityBigrams/accel/F11-processed/
+../data/derived/activityBigrams/alspac/
 ```
 
 `*.DAT` refers to all accelerometer data files from the Focus at age 11 ALSPAC clinic.
 
+The code outputs generated results files to the directory `out` in this directory.
+This needs to be made if it doesn't exist:
+
+```bash
+mkdir out
+```
 
 ## 1. Preprocessing
 
@@ -48,17 +55,17 @@ We perform the following preprocessing:
 	cd accelDataProcessing/
 	sh dat-file-preprocessing.sh
 	```
-
-2. Combine the accelerometer data into a single file
-3. Recode sequences of >=60 consecutive zeros to missing (value -1)
-4. Discretise activity levels to categories: sedentary=0, low=1, moderate=2, vigorous=3
+2. Prepare the accelerometer data
+ 2. Combine the accelerometer data into a single file
+ 3. Recode sequences of >=60 consecutive zeros to missing (value -1)
+ 4. Discretise activity levels to categories: sedentary=0, low=1, moderate=2, vigorous=3
 
 ```bash 
 cd accelDataProcessing/
 matlab -r combineParticipantsRecodeMissing
 ```
 
-Optional: plot a participants discretised sequence
+Optional: plot a participant's discretised sequence:
 
 ```bash
 cd accelDataProcessing/
@@ -67,7 +74,10 @@ matlab -r plotPersonsAccelerometerData
 
 ### 1b. Collate necessary data from ALSPAC data files
 
-Create a file called myvars-for-bigramsV2.csv in `../../data/derived/alspac/`.
+ALSPAC data is stored as Stata dta files. We process this to extract the required variables
+and do some basic processing to prepare variables, e.g. recoding as missing.
+
+This script creates a file called alspac-variables.csv in `../../data/derived/activityBigrams/alspac/`.
 
 ```bash
 cd alspacDataProcessing/
@@ -82,7 +92,8 @@ The following variables are generated:
 1. mCPM: average counts per minute
 2. mSD: standard deviation of counts per minute
 3. countMissing, countSed, countLow, countMod, countVig: the frequency of each activity category
-4. activity bigrams: the frequency
+4. activity bigrams: the frequency of each activity bigram
+5. numValidDays: the number of valid days, defined as having at least 8 hours wear time (i.e. not recoded as missing)
 
 ```bash
 cd generateActivityVariables/
@@ -103,7 +114,8 @@ matlab -r combineDatasets
 ## 4) Tests of confounding factors for those in sample vs those not in sample
 
 We create a dataset to perform the confounder analysis. This is different from the main dataset because it
-contains all the participants that came to the F11 clinic.
+contains all the participants that came to the F11 clinic, with an indicator variable `insample` denoting
+whether each person is in our sample.
 
 ```bash
 cd confounderAnalysis/
@@ -181,10 +193,41 @@ matlab -r plotDistributions
 
 ## 10) Plot relationship between the frequency of bigrams vs the frequency of unigrams
 
-
 ```bash
 cd postAnalysis/
 matlab -r compareBigramsUnigrams
 ```
+
+## U-bigram standard deviations
+
+```bash
+matlab -r ubigramSD
+```
+
+## 11) Sensitivity analysis
+
+In the analysis above we use all days, including those with <8 hours wear time.
+
+In this sensitivity analysis we repeat the bigram tests of association, including only valid days (>=8 hours wear time).
+
+Generate activity variables, including only valid days:
+```bash
+cd generateActivityVariables/
+qsub j-gen-varsVD.sh
+```
+
+Combine VD activity data with core ALSPAC variables:
+```bash
+cd generateActivityVariables/
+matlab -r combineDatasetsValidDaysOnly
+```
+
+Test associations of bigrams with BMI:
+```bash
+cd bigramAssociations/
+matlab -r bigramAssociationsFinalValidDaysOnly
+```
+
+
 
 

@@ -1,12 +1,13 @@
 
-
-f1 = '../../data/derived/accel/alspac-7days-discretised.csv';
+% both real valued and discretised accel sequences are needed to calculate
+% mCPM and unigrams/bigrams respectively
+f1 = '../../data/derived/activityBigrams/accel/alspac-7days-discretised.csv';
 seqDiscretised = dlmread(f1);
-f2 = '../../data/derived/accel/alspac-7days-missingRecoded.csv';
+f2 = '../../data/derived/activityBigrams/accel/alspac-7days-missingRecoded.csv';
 seqMissRec = dlmread(f2);
 
 
-%% calculate mCPM for each person and whether their sequence is valid or now (>= 3 days with >=8 hours wear time)
+%% calculate mCPM for each person and number of valid days
 data1 = [];
 for i=1:size(seqMissRec,1)
 
@@ -16,7 +17,6 @@ for i=1:size(seqMissRec,1)
 	
 	% mCPM
 	ix = find(seq>=0);
-	numEpochs = size(ix,2);
 	average = mean(seq(ix));
 	sd = std(seq(ix));
 
@@ -25,7 +25,8 @@ for i=1:size(seqMissRec,1)
 	for j=1:7
 		seqDay = seq(1,1+(j-1)*60*24:j*60*24);
         	numValidMinutes = size(find(seqDay>=0),2);
-        
+
+		% valid day defined as having at least 8 hours wear time        
         	if (numValidMinutes>=8*60)
         	    numValidDays = numValidDays +1;
         	end
@@ -38,7 +39,8 @@ end
 ds1 = mat2dataset(data1);
 ds1.Properties.VarNames = {'aln', 'qlet', 'mCPM', 'mSD', 'numValidDays'};
 
-%% calculate bigrams and prior probability of each state
+
+%% calculate unigrams and bigrams (as counts)
 
 data2 = [];
 for i=1:size(seqDiscretised,1)
@@ -65,7 +67,7 @@ ds2.Properties.VarNames = {'aln', 'qlet', 'countMissing', 'countSed','countLow',
 
 ds = join(ds1, ds2, {'aln', 'qlet'});
 
-export(ds, 'file','../../data/derived/activity-phenotypes.csv', 'delimiter', ',');
+export(ds, 'file','../../data/derived/activityBigrams/accel/activity-phenotypes.csv', 'delimiter', ',');
 
 
 

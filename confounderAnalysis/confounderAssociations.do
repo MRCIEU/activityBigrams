@@ -1,7 +1,7 @@
 
 * module add apps/stata14 
 
-insheet using "../../data/derived/datasetWithInSampleForStata.csv", clear
+insheet using "../../data/derived/activityBigrams/alspac/datasetWithInSampleForStata.csv", clear
 
 log using ../out/confounder-assoc.log
 
@@ -15,17 +15,17 @@ replace age11 = age11/365
 
 summ age11 if insample == 0
 summ age11 if insample == 1
-*regress age11 insample 
 logistic insample age11
 
 *** GENDER
 
-replace sex_left = "" if sex_left == "NaN"
-replace sex_right = "" if sex_right == "NaN"
-destring sex_left, replace
-destring sex_right, replace
-gen sex = sex_left if insample == 1
-replace sex = sex_right if insample == 0
+*replace sex_left = "" if sex_left == "NaN"
+*replace sex_right = "" if sex_right == "NaN"
+*destring sex_left, replace
+*destring sex_right, replace
+gen sex = int(sex_right)
+*gen sex = sex_left if insample == 1
+*replace sex = sex_right if insample == 0
 drop sex_*
 
 tab sex if insample == 0
@@ -34,7 +34,6 @@ tab sex if insample == 1
 replace sex = 0 if sex ==1
 replace sex = 1 if sex ==2
 * 0 male, 1 female
-*prtest sex, by(insample)
 logistic insample sex
 
 *** BMI 
@@ -49,7 +48,6 @@ drop bmi11_*
 
 summ bmi11 if insample == 0
 summ bmi11 if insample == 1
-*regress bmi insample 
 logistic insample bmi
 
 *** PARITY
@@ -63,10 +61,6 @@ drop parity_*
 tab parity if insample == 0
 tab parity if insample == 1
 
-*tab parity, gen(parityI)
-*prtest parityI1, by(insample)
-*prtest parityI2, by(insample)
-*prtest parityI3, by(insample)
 logistic insample parity
 
 *** household social class
@@ -83,14 +77,6 @@ tab hhsoc if insample == 0
 tab hhsoc if insample == 1
 logistic insample hhsoc
 
-*tab hhsoc, gen(hhsocI)
-*prtest hhsocI1, by(insample)
-*prtest hhsocI2, by(insample)
-*prtest hhsocI3, by(insample)
-*prtest hhsocI4, by(insample)
-*prtest hhsocI5, by(insample)
-
-
 *** ETHNICITY
 
 replace ethnicity_left = "" if ethnicity_left == "NaN"
@@ -106,8 +92,6 @@ replace ethnicity = 1 if ethnicity ==2
 
 tab ethnicity if insample == 0
 tab ethnicity if insample == 1
-* logistic insample i.ethnicity
-*prtest ethnicity, by(insample)
 logistic insample ethnicity
 
 **** MATERNAL EDUCATION
@@ -124,11 +108,6 @@ drop mated_*
 tab mated if insample == 0
 tab mated if insample == 1
 
-*tab mated, gen(matedI)
-*prtest matedI1, by(insample)
-*prtest matedI2, by(insample)
-*prtest matedI3, by(insample)
-*prtest matedI4, by(insample)
 logistic insample mated
 
 **** MATERNAL SMOKING IN PREGNANCY
@@ -146,7 +125,6 @@ drop matsmpreg_*
 tab matsmpreg if insample == 0
 tab matsmpreg if insample == 1
 
-*prtest matsmpreg, by(insample)
 logistic insample matsmpreg
 
 log close

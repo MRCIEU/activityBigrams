@@ -23,24 +23,22 @@ end
 
 saveas(h, '../out/figure-bigramDistributions.pdf');
 
-%h=figure;
-%boxplot(double(bigrams)/7, 'Labels', {'SS', 'SL', 'SM', 'SV','LS', 'LL', 'LM', 'LV','MS', 'ML', 'MM', 'MV','VS', 'VL', 'VM', 'VV'}, 'outliersize', 2, 'colors', [0.8 0.3 0.9], 'symbol', '');
-%xlabel('Bigram');
-%ylabel('mins/day');
-%saveas(h, '../out/figure-bigramDistributions-box.pdf')
 
 % bigram summary statistics for paper table
 % iqr
+fileID = fopen('../out/bigram-distributions.csv','w');
+fprintf(fileID, 'bigram \t median \t (IQR)\n');
+labels = {'SS', 'SL', 'SM', 'SV','LS', 'LL', 'LM', 'LV','MS', 'ML', 'MM', 'MV','VS', 'VL', 'VM', 'VV'};
 for i=1:size(bigrams,2) 
 	b = double(bigrams(:,i))/7; 
 	bx = sort(b); 
 	n=size(bx,1); 
-	l=bx(round(n/4));h=bx(round(3*n/4)); 
-	fprintf('%.3f, %.3f \n', l, h); 
+	liqr=bx(round(n/4));
+	hiqr=bx(round(3*n/4)); 
+	m = median(b);
+	fprintf(fileID, '%s \t%.3f \t(%.3f, %.3f) \n', labels{i}, m, liqr, hiqr); 
 end
-% median
-median(double(bigrams)/7)
-
+fclose(fileID);
 
 %%
 %% ubigram distributions

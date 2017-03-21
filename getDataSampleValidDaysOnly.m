@@ -3,7 +3,7 @@
 function data = getDataSampleValidDaysOnly()
 
 
-	data = dataset('file','../../data/derived/main-datasetValidDaysOnly.csv', 'delimiter', ',');
+	data = dataset('file','../../data/derived/activityBigrams/main-datasetValidDaysOnly.csv', 'delimiter', ',');
 
 	fprintf(strcat('Num: ', num2str(size(data,1)), '\n'));
 

@@ -5,10 +5,10 @@
 %% read in each persons data, keep only first 7 days and recode missingness
 
 
-files = dir('../../data/derived/accel/F11-processed/*.csv');
+files = dir('../../data/derived/activityBigrams/accel/F11-processed/*.csv');
 
-file1 = '../../data/derived/accel/alspac-7days-missingRecoded.csv';
-file2 = '../../data/derived/accel/alspac-7days-discretised.csv';
+file1 = '../../data/derived/activityBigrams/accel/alspac-7days-missingRecoded.csv';
+file2 = '../../data/derived/activityBigrams/accel/alspac-7days-discretised.csv';
 
 % make new files
 fid = fopen(file1,'w');
@@ -18,7 +18,7 @@ fclose(fid);
 
 for file=files'
 
-%	fprintf(strcat(file.name,'\n'));
+	% get aln and qlet from file name
 	[~,userId,~] = fileparts(file.name);
 	aln = str2num(userId(1:size(userId,2)-1));
 	if (size(findstr(userId,'A'),2)==1)
@@ -31,11 +31,12 @@ for file=files'
                 qlet = 3;
         end
 	
-	x = dlmread(strcat('../../data/derived/accel/F11-processed/',file.name));
+	x = dlmread(strcat('../../data/derived/activityBigrams/accel/F11-processed/',file.name));
 
 	% make into 1 long row
 	seq = reshape(x',1,size(x,1)*size(x,2));
-	
+
+	% get first 7 days and ignore those without enough data	
 	days7 = 7*24*60;
 	if (size(seq,2)>=days7)
 

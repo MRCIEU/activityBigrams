@@ -6,15 +6,12 @@ confounders = data(:,{'ethnicity', 'parity', 'matSmPreg', 'hhsoc', 'mated', 'sex
 
 colorx = {'[1.0 0.6 0.0]';'[0.5 0.8 0.0]';'[0.8 0.2 0.2]'; '[0.1 0.1 0.6]'; '[1.0 0.3 0.75]'};
 
-h=figure('units','normalized','position',[.1 .1 .8 .4]);
+h=figure('units','inches','position',[.1 .1 12 4.8]);
 plot([0 5], [0 0], '--', 'color', 'black');
 xlim([1 5]);
 set(gca,'fontsize',12);
 set(gca,'XTick',[1.25 1.5 1.75 2.25 2.5 2.75 3.25 3.5 3.75 4.25 4.5 4.75]);
 set(gca,'XTickLabel',{'S vs L', 'S vs M', 'S vs V', 'L vs S', 'L vs M', 'L vs V', 'M vs S', 'M vs L', 'M vs V', 'V vs S', 'V vs L', 'V vs M'});
-
-%set(gca,'XTickLabel',{'sedentary','low','moderate ','vigorous'});
-%set(gca,'XTick',[1:4]+0.3);
 
 xlabel('Physical activity state comparison (baseline vs comparison)');
 ylabel('Change of BMI');

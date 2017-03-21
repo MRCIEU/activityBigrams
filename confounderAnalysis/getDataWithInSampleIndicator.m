@@ -1,6 +1,6 @@
 
 % phenotypes datset contains all people who came to F11 clinic
-phenotypes = dataset('file', '../../data/derived/alspac/alspac-variables.csv', 'delimiter', ',');
+phenotypes = dataset('file', '../../data/derived/activityBigrams/alspac/alspac-variables.csv', 'delimiter', ',');
 
 % our sample
 addpath('..');
@@ -28,6 +28,6 @@ C.insample(ix) = 0;
 size(find(isnan(C.insample)))
 size(find(C.insample == 0))  
 
-export(C, 'file', '../../data/derived/datasetWithInSampleForStata.csv', 'delimiter', ',');
+export(C, 'file', '../../data/derived/activityBigrams/alspac/datasetWithInSampleForStata.csv', 'delimiter', ',');
 
 

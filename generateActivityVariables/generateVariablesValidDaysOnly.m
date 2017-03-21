@@ -1,8 +1,11 @@
 
+%% same as generateVariables.m except calculations use only the valid days (with at least 8 hours wear time).
 
-f1 = '../../data/derived/accel/alspac-7days-discretised.csv';
+% both real valued and discretised accel sequences are needed to calculate
+% mCPM and unigrams/bigrams respectively
+f1 = '../../data/derived/activityBigrams/accel/alspac-7days-discretised.csv';
 seqDiscretised = dlmread(f1);
-f2 = '../../data/derived/accel/alspac-7days-missingRecoded.csv';
+f2 = '../../data/derived/activityBigrams/accel/alspac-7days-missingRecoded.csv';
 seqMissRec = dlmread(f2);
 
 validDays =[];
@@ -15,13 +18,7 @@ for i=1:size(seqMissRec,1)
 	qlet = seqMissRec(i,2);
 	seq = seqMissRec(i,3:end);
 	
-	% mCPM
-%	ix = find(seq>=0);
-%	numEpochs = size(ix,2);
-%	average = mean(seq(ix));
-%	sd = std(seq(ix));
-
-	% num valid days
+	% store valid days as a matrix (each row is a day)
 	numValidDays = 0;
 	vd = repmat(0,1,7);
 	vddata = [];
@@ -36,7 +33,8 @@ for i=1:size(seqMissRec,1)
         	end
 	end
 	validDays(i,:)=[aln qlet vd];
-	
+
+	% calculate mCPM and sd across valid days
 	allDays = reshape(vddata,1,[]);
 	ix = find(allDays>=0);
         average = mean(allDays(ix));
@@ -60,9 +58,8 @@ for i=1:size(seqDiscretised,1)
 
 	vdidx = find(validDays(:,1)==aln & validDays(:,2)==qlet);
 	vd = validDays(vdidx,3:end);
-%	ix = find(data1(:,1)==aln & data1(:,2)==qlet);
-%	data1(ix,:)
 
+	% get discretised valid days (each row is a day)
 	seq = [];
 	for j=1:7
 		if (vd(j)==1)
@@ -70,6 +67,7 @@ for i=1:size(seqDiscretised,1)
 		end
 	end
 
+	% get unigram (as count) in valid days
 	seqAsRow = reshape(seq,1,[]);
 	% state prior probabilities
 	imiss = find(seqAsRow==-1);
@@ -89,7 +87,7 @@ ds2.Properties.VarNames = {'aln', 'qlet', 'countMissing', 'countSed','countLow',
 
 ds = join(ds1, ds2, {'aln', 'qlet'});
 
-export(ds, 'file','../../data/derived/activity-phenotypesValidDaysOnly.csv', 'delimiter', ',');
+export(ds, 'file','../../data/derived/activityBigrams/accel/activity-phenotypesValidDaysOnly.csv', 'delimiter', ',');
 
 
 

@@ -69,11 +69,7 @@ for j=6:size(bigrams,2) % baseline
 
 		B = B*10; BINT = BINT*10;
 
-		% model 3 results only (table in main paper)
-		%if (test==3)
-		%	fprintf('%.3f [%.3f, %.3f] \t', B(1), BINT(1,1), BINT(1,2));
-		%end
-		% full results (sup table)
+		% full results (shown in supplementary table)
 
 		fprintf(fileID, '%.3f [%.3f, %.3f] \t', B(1), BINT(1,1), BINT(1,2));
 
@@ -87,31 +83,27 @@ for j=6:size(bigrams,2) % baseline
 		count = count + 1;
 	end
 
-	%fprintf('\n');
-
 	set(h,'Units','Inches');
 	pos = get(h,'Position');
 	set(h,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)]);
 	saveas(h, strcat('../out/figure-ubigram-assoc', num2str(j),'.pdf'));
 
 	if (j<size(bigrams,2))
-	if (j==size(bigrams,2)-1) % last new figure
-		%labelsx = bigrams.Properties.VarNames(6:size(bigrams,2));
-		labelsx = myVarNames(6:size(bigrams,2));
-	else
-		%labelsx = bigrams.Properties.VarNames([6:j j+2:size(bigrams,2)]);
-		labelsx = myVarNames([6:j j+2:size(bigrams,2)]);
-	end
+		if (j==size(bigrams,2)-1) % last new figure
+			labelsx = myVarNames(6:size(bigrams,2));
+		else
+			labelsx = myVarNames([6:j j+2:size(bigrams,2)]);
+		end
 
-	h=figure('units','inches','position',[.1 .1 12 4.8]);
-	plot([1 10], [0 0], '--', 'color', 'black');
-	xlim([1 10]);
-	ylim([-10 10]);
-	set(gca,'XTick',[1:10]+0.3);
-	set(gca,'XTickLabel',labelsx);
-	xlabel(strcat('Unordered bigram comparator (baseline: ', myVarNames(j+1), ')'), 'FontSize',20);
-	ylabel('Change of BMI', 'FontSize',20);
-	set(gca,'fontsize',20);
+		h=figure('units','inches','position',[.1 .1 12 4.8]);
+		plot([1 10], [0 0], '--', 'color', 'black');
+		xlim([1 10]);
+		ylim([-10 10]);
+		set(gca,'XTick',[1:10]+0.3);
+		set(gca,'XTickLabel',labelsx);
+		xlabel(strcat('Unordered bigram comparator (baseline: ', myVarNames(j+1), ')'), 'FontSize',20);
+		ylabel('Change of BMI', 'FontSize',20);
+		set(gca,'fontsize',20);
 
 	end
 end

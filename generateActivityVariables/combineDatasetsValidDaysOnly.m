@@ -1,16 +1,16 @@
 
 
 
-pa=dataset('file','../../data/derived/activity-phenotypesValidDaysOnly.csv', 'delimiter', ',');
+pa=dataset('file','../../data/derived/activityBigrams/accel/activity-phenotypesValidDaysOnly.csv', 'delimiter', ',');
 
-phenotypes = dataset('file', '../../data/derived/alspac/alspac-variables.csv', 'delimiter', ',');
+phenotypes = dataset('file', '../../data/derived/activityBigrams/alspac/alspac-variables.csv', 'delimiter', ',');
 
 % fix different encoding for qlet
 phenotypes.qlet = phenotypes.qlet - 1;
 
 dataAll = join(pa,phenotypes, 'type', 'leftouter', 'keys', {'aln','qlet'}, 'MergeKeys',true);
 
-export(dataAll, 'file','../../data/derived/main-datasetValidDaysOnly.csv', 'delimiter', ',');
+export(dataAll, 'file','../../data/derived/activityBigrams/main-datasetValidDaysOnly.csv', 'delimiter', ',');
 
 
 

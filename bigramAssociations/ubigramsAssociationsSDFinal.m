@@ -59,7 +59,6 @@ for j=6:size(bigrams,2) % baseline
 	
 		sumOther = sum(double(otherBigrams),2)/7;
 		testx = double(sumOther) + double(indVar)/7 + double(bigrams(:,j))/7;
-%		fprintf('TEST %f\n', testx(1));
 		
 		if (test==1)
 			[B,BINT,R,RINT,STATS] = regress(data.bmi11, [double(indVar)/7 sumOther repmat(1,size(data.bmi11, 1), 1)]);
@@ -70,7 +69,6 @@ for j=6:size(bigrams,2) % baseline
 		elseif (test==4)
 			[B,BINT,R,RINT,STATS] = regress(data.bmi11, [double(indVar)/7 sumOther double(data.mCPM) double(confounders) repmat(1,size(data.bmi11, 1), 1)]);
 		end
-
 
 		if (baselineBigramSD<=comparisonBigramSD)
 			B = B*baselineBigramSD; BINT = BINT*baselineBigramSD;

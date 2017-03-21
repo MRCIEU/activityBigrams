@@ -8,37 +8,37 @@
 
 use "../../data/original/alspac/c_7d.dta"
 keep aln c804 c482 c755 c765 c645
-save "../../data/derived/alspac/vars-32wksgest.dta"
+save "../../data/derived/activityBigrams/alspac/vars-32wksgest.dta"
 
 * bmi 11
 use "../../data/original/alspac/f11_4b.dta"
 keep aln qlet fems026a fe003a
-save "../../data/derived/alspac/bmi11.dta"
+save "../../data/derived/activityBigrams/alspac/bmi11.dta"
 
 * parity (b032)
 * mother smoked in preg  - b665 b667
 use "../../data/original/alspac/b_4d.dta"
 keep aln b032 b681 b663 b659 b653 b654 b655 b656  b665 b667 b670 b671 b700 b701 b702
-save "../../data/derived/alspac/vars-18wksgest.dta"
+save "../../data/derived/activityBigrams/alspac/vars-18wksgest.dta"
 
 * sex
 use "../../data/original/alspac/kz_5b.dta"
 keep aln qlet kz021
-save "../../data/derived/alspac/sex.dta"
+save "../../data/derived/activityBigrams/alspac/sex.dta"
 
 
 ** ** ** ** ** ** 
 ** combine and generate derived variables
-use "../../data/derived/alspac/bmi11.dta"
-merge m:1 aln using "../../data/derived/alspac/vars-32wksgest.dta"
+use "../../data/derived/activityBigrams/alspac/bmi11.dta"
+merge m:1 aln using "../../data/derived/activityBigrams/alspac/vars-32wksgest.dta"
 drop if _merge ==2
 drop _merge
 
-merge m:1 aln using "../../data/derived/alspac/vars-18wksgest.dta"
+merge m:1 aln using "../../data/derived/activityBigrams/alspac/vars-18wksgest.dta"
 drop if _merge ==2
 drop _merge
 
-merge m:1 aln qlet using "../../data/derived/alspac/sex.dta"
+merge m:1 aln qlet using "../../data/derived/activityBigrams/alspac/sex.dta"
 drop if _merge ==2
 drop _merge
 
@@ -82,6 +82,7 @@ replace  mated = 2 if  c645 == 3
 replace  mated = 3 if  c645 == 4
 replace  mated = 4 if  c645 == 5
 
+* parity
 replace b032 = . if b032 <0
 replace b032 = 2 if b032 >2
 
@@ -99,30 +100,5 @@ rename qletF qlet
 
 drop b6* b7* smok16wks smok32wks c482 c645
 
-*outsheet using  "/Volumes/Filestore/My Files/Student Filestore/lm0423/TEMP/myvars-for-bigrams.csv", comma nolabel replace
-outsheet using  "../../data/derived/alspac/alspac-variables.csv", comma nolabel replace
-
-END
-
-*****
-
-save "/Volumes/Filestore/My Files/Student Filestore/lm0423/TEMP/myvars-for-bigrams.dta", replace
-
-
-* checking the variables are the same / nearly the same as those used for PA in preg paper
-rename ethnicity ethnicityX
-rename parity parityX
-rename mated matedX
-rename bmi11 bmi11X
-rename matSmPreg matsmX
-rename hhsoc hhsocX
-
-merge 1:1 aln qlet using "/Volumes/Filestore/My Files/Student Filestore/lm0423/TEMP/vars-for-bigrams.dta"
-
-tab matsm2 matsmX
-tab hhsocclass hhsocX
-tab mated matedX
-
-* mat smoke is wrong
-
+outsheet using  "../../data/derived/activityBigrams/alspac/alspac-variables.csv", comma nolabel replace
 

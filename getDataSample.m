@@ -3,7 +3,7 @@
 function data = getDataSample()
 
 
-	data = dataset('file','../../data/derived/main-dataset.csv', 'delimiter', ',');
+	data = dataset('file','../../data/derived/activityBigrams/main-dataset.csv', 'delimiter', ',');
 
 	fprintf(strcat('Num: ', num2str(size(data,1)), '\n'));
 
