@@ -201,6 +201,7 @@ matlab -r compareBigramsUnigrams
 ## U-bigram standard deviations
 
 ```bash
+cd postAnalysis/
 matlab -r ubigramSD
 ```
 
