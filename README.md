@@ -2,9 +2,12 @@
 
 # Activity bigrams 
 
-This code accompanies the paper:
+Activity bigrams are a set of variables derived from accelerometer data, that describe how a person's activity changes
+from one moment to the next.
 
-Millard, L.A.C, et al, Physical activity phenotyping with activity bigrams, and their association with BMI, submitted 2016
+This code generates activity bigrams, and analyses their association with BMI, using the ALSPAC cohort (at age 11), and accompanies the paper:
+
+Millard LAC, Tilling K, Lawlor DA, Flach PA, Gaunt TR. Physical activity phenotyping with activity bigrams, and their association with BMI, submitted 2017.
 
 
 ## General requirements
@@ -128,6 +131,7 @@ Perform the confounder associations:
 cd confounderAnalysis/
 stata -b do confounderAssociations.do nolog
 ```
+Results are output to `confounder-assoc.log`.
 
 ## 5) Tests of state priors vs BMI
 
@@ -141,11 +145,11 @@ cd basicAssociations/
 matlab -r priorAssociationsFinal
 ```
 
-## 6) Tests of mCPM and mSD with BMI
+## 6) Tests of mCPM and sdCPM with BMI
 
 Runs tests of association of mCPM and mSD with BMI. See paper for analysis details.
 
-Results are stored in mCPM-mSD-assoc.csv and as a figure (figure-mCPM-vCPM.pdf).
+Results are stored in mCPM-sdCPM-assoc.csv and as a figure (figure-mCPM-sdCPM.pdf).
 
 ```bash
 cd basicAssociations/
@@ -156,7 +160,7 @@ matlab -r associationsmCPM
 
 Runs tests of association of bigrams with BMI. See paper for analysis details.
 
-Results	are stored in bigram-assoc.csv and as a figure (figure-bigram-assoc.pdf).
+Results	are stored in bigram-assoc.csv and one figure for the results with each bigram as the baseline (figure-bigram-assoc*.pdf).
 
 ```bash
 cd bigramAssociations/
@@ -167,7 +171,7 @@ matlab -r bigramAssociationsFinal
 
 Runs tests of association of u-bigrams with BMI. See paper for analysis details.
 
-Results are stored in ubigram-assoc.csv and as a figure (figure-ubigram-assoc.pdf).
+Results are stored in ubigram-assoc.csv and one figure for the results with each u-bigram as the baseline (figure-ubigram-assoc*.pdf).
 
 ```bash
 cd bigramAssociations/
@@ -182,6 +186,8 @@ SD of the baseline < SD of the comparison bigram.
 cd bigramAssociations/
 matlab -r ubigramsAssociationsSDFinal
 ```
+
+Results are stored in ubigram-assoc-SD.csv and one figure for the results with each u-bigram as the baseline (figure-ubigram-assoc-SD*.pdf).
 
 
 ## 9) Plot bigram distibutions (histograms)
@@ -198,12 +204,17 @@ cd postAnalysis/
 matlab -r compareBigramsUnigrams
 ```
 
+Generates 1 figure for each unigram: `figure-sedentary-bigram-unigram-comp.pdf`, `figure-low-bigram-unigram-comp.pdf`, `figure-moderate-bigram-unigram-comp.pdf` and `figure-vigorous-bigram-unigram-comp.pdf`.
+
 ## U-bigram standard deviations
 
 ```bash
 cd postAnalysis/
 matlab -r ubigramSD
 ```
+
+Output is stored in `ubigram-sd.csv`.
+
 
 ## 11) Sensitivity analysis
 
@@ -228,6 +239,8 @@ Test associations of bigrams with BMI:
 cd bigramAssociations/
 matlab -r bigramAssociationsFinalValidDaysOnly
 ```
+
+Results are stored in bigram-assocValidDaysOnly.csv and one figure for the results with each bigram as the baseline (figure-bigram-assoc*-ValidDaysOnly.pdf).
 
 
 
