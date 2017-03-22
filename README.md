@@ -5,9 +5,10 @@
 Activity bigrams are a set of variables derived from accelerometer data, that describe how a person's activity changes
 from one moment to the next.
 
-This code generates activity bigrams, and analyses their association with BMI, using the ALSPAC cohort (at age 11), and accompanies the paper:
+This code generates activity bigrams and analyses their association with BMI, using the ALSPAC cohort (at age 11). It accompanies the paper:
 
 Millard LAC, Tilling K, Lawlor DA, Flach PA, Gaunt TR. Physical activity phenotyping with activity bigrams, and their association with BMI, submitted 2017.
+
 
 
 ## General requirements
