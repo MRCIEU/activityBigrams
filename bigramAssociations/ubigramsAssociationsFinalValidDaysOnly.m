@@ -86,7 +86,7 @@ for j=6:size(bigrams,2) % baseline
 	set(h,'Units','Inches');
 	pos = get(h,'Position');
 	set(h,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)]);
-	saveas(h, strcat('../out/figure-ubigram-assocValidDaysOnly', num2str(j),'.pdf'));
+	saveas(h, strcat('../out/figure-ubigram-assoc', num2str(j),'-ValidDaysOnly.pdf'));
 
 	if (j<size(bigrams,2))
 		if (j==size(bigrams,2)-1) % last new figure
@@ -114,5 +114,5 @@ set(h,'Units','Inches');
 pos = get(h,'Position');
 
 set(h,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)]);
-saveas(h, strcat('../out/figure-ubigram-assocValidDaysOnly', num2str(j),'.pdf'));
+saveas(h, strcat('../out/figure-ubigram-assoc', num2str(j),'-ValidDaysOnly.pdf'));
 

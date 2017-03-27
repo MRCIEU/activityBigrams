@@ -244,6 +244,13 @@ matlab -r bigramAssociationsFinalValidDaysOnly
 
 Results are stored in bigram-assocValidDaysOnly.csv and one figure for the results with each bigram as the baseline (figure-bigram-assoc*-ValidDaysOnly.pdf).
 
+Test associations of ubigrams with BMI:
+```bash
+cd bigramAssociations/
+matlab -r ubigramAssociationsFinalValidDaysOnly
+```
+
+Results are stored in ubigram-assocValidDaysOnly.csv and one figure for the results with each bigram as the baseline (figure-ubigram-assoc*-ValidDaysOnly.pdf).
 
 
 
