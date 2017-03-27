@@ -14,7 +14,7 @@ set(gca,'XTick',[1.25 1.5 1.75 2.25 2.5 2.75 3.25 3.5 3.75 4.25 4.5 4.75]);
 set(gca,'XTickLabel',{'S vs L', 'S vs M', 'S vs V', 'L vs S', 'L vs M', 'L vs V', 'M vs S', 'M vs L', 'M vs V', 'V vs S', 'V vs L', 'V vs M'});
 
 xlabel('Physical activity state comparison (baseline vs comparison)');
-ylabel('Change of BMI');
+ylabel('Difference in BMI');
 
 % mean minutes in each state per day
 data.countMissing = data.countMissing/7;

@@ -68,7 +68,7 @@ set(gca,'XTick',[1.2 2.2]);
 set(gca,'XTickLabel',{'mCPM', 'sdCPM'});
 set(gca,'fontsize',14);
 xlabel('Physical activity measure');
-ylabel('Change of BMI');
+ylabel('Difference in BMI');
 xlim([0.9 2.5]);
 ylim([-0.6 0.2]);
 

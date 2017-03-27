@@ -17,7 +17,7 @@ set(gca,'XTickLabel',{'SL', 'SM', 'SV', 'LS', 'LL', 'LM', 'LV', 'MS', 'ML', 'MM'
 set(gca,'fontsize',20);
 
 xlabel(strcat('Bigram comparator (baseline: ', bigrams.Properties.VarNames(10), ')'), 'FontSize',20);
-ylabel('Change of BMI', 'FontSize',20);
+ylabel('Difference in BMI', 'FontSize',20);
 
 colorx = {'[1.0 0.6 0.0]';'[0.5 0.8 0.0]';'[0.8 0.2 0.2]'; '[0.1 0.1 0.6]'; '[1.0 0.3 0.75]'};
 markersx = {'o';'x';'s';'*'};
@@ -103,7 +103,7 @@ for j=10:size(bigrams,2) % baseline
 	set(gca,'fontsize',20);
 
 	xlabel(strcat('Bigram comparator (baseline: ', bigrams.Properties.VarNames(j+1), ')'), 'FontSize',20);
-	ylabel('Change of BMI', 'FontSize',20);
+	ylabel('Difference in BMI', 'FontSize',20);
 	end
 end
 
