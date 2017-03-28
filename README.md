@@ -56,10 +56,11 @@ We perform the following preprocessing:
 
 1. Remove the header of the accelerometer data files
 
-	```bash
-	cd accelDataProcessing/
-	sh dat-file-preprocessing.sh
-	```
+ ```bash
+ cd accelDataProcessing/
+ sh dat-file-preprocessing.sh
+ ```
+
 2. Prepare the accelerometer data
   1. Combine the accelerometer data into a single file
   2. Recode sequences of >=60 consecutive zeros to missing (value -1)
