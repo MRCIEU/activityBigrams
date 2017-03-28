@@ -43,8 +43,9 @@ for j=6:size(bigrams,2) % baseline
 
 		indVar = bigrams(:,i);
 		stateCounts = [data.countSed data.countLow data.countMod data.countVig];
-
 		otherBigrams = bigrams;
+
+		vd = data.numValidDays;
 
 		if (i>j) % need to delete highest index first as once delete indexes after change
 			otherBigrams(:,i) = [];
@@ -54,17 +55,17 @@ for j=6:size(bigrams,2) % baseline
                         otherBigrams(:,i) = [];	
 		end
 	
-		sumOther = sum(double(otherBigrams),2)/7;
-		testx = double(sumOther) + double(indVar)/7 + double(bigrams(:,j))/7;
+		sumOther = sum(double(otherBigrams),2)./vd;
+		testx = double(sumOther) + double(indVar)./vd + double(bigrams(:,j))./vd;
 		
 		if (test==1)
-			[B,BINT,R,RINT,STATS] = regress(data.bmi11, [double(indVar)/7 sumOther repmat(1,size(data.bmi11, 1), 1)]);
+			[B,BINT,R,RINT,STATS] = regress(data.bmi11, [double(indVar)./vd sumOther repmat(1,size(data.bmi11, 1), 1)]);
 		elseif (test==2)
-			[B,BINT,R,RINT,STATS] = regress(data.bmi11, [double(indVar)/7 sumOther double(confounders) repmat(1,size(data.bmi11, 1), 1)]);
+			[B,BINT,R,RINT,STATS] = regress(data.bmi11, [double(indVar)./vd sumOther double(confounders) repmat(1,size(data.bmi11, 1), 1)]);
 		elseif (test==3)
-			[B,BINT,R,RINT,STATS] = regress(data.bmi11, [double(indVar)/7 sumOther double(stateCounts) double(confounders) repmat(1,size(data.bmi11, 1), 1)]);
+			[B,BINT,R,RINT,STATS] = regress(data.bmi11, [double(indVar)./vd sumOther double(stateCounts) double(confounders) repmat(1,size(data.bmi11, 1), 1)]);
 		elseif (test==4)
-			[B,BINT,R,RINT,STATS] = regress(data.bmi11, [double(indVar)/7 sumOther double(data.mCPM) double(confounders) repmat(1,size(data.bmi11, 1), 1)]);
+			[B,BINT,R,RINT,STATS] = regress(data.bmi11, [double(indVar)./vd sumOther double(data.mCPM) double(confounders) repmat(1,size(data.bmi11, 1), 1)]);
 		end
 
 		B = B*10; BINT = BINT*10;
