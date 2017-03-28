@@ -44,7 +44,6 @@ for j=6:size(bigrams,2) % baseline
 		indVar = bigrams(:,i);
 		stateCounts = [data.countSed data.countLow data.countMod data.countVig];
 		otherBigrams = bigrams;
-
 		vd = data.numValidDays;
 
 		if (i>j) % need to delete highest index first as once delete indexes after change
