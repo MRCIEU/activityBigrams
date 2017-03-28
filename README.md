@@ -7,7 +7,7 @@ from one moment to the next.
 
 This repository accompanies the paper:
 
-Millard LAC, Tilling K, Lawlor DA, Flach PA, Gaunt TR. Physical activity phenotyping with activity bigrams, and their association with BMI, submitted 2017.
+Millard LAC, Tilling K, Lawlor DA, Flach PA, Gaunt TR. Physical activity phenotyping with activity bigrams, and their association with BMI. bioRxiv 2017.
 
 The code in this repository generates activity bigrams and analyses their association with BMI, using the ALSPAC cohort (at age 11).
 
