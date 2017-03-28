@@ -5,7 +5,7 @@
 
 module add apps/matlab-r2015a
 
-cd /panfs/panasas01/sscm/lm0423/2016-alspac-accelerometer/activityBigrams/
+cd /panfs/panasas01/sscm/lm0423/2016-alspac-accelerometer/activityBigrams/generateActivityVariables/
 
 date
 

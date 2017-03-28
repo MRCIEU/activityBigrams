@@ -3,7 +3,7 @@
 
 function bigrams = generateBigramsValidDaysOnly(seq)
 
-     	% row idx indicates first activity category in bigram (M,S,L,M,V) and col idx indicates second category
+     	% row idx indicates first activity category in bigram (miss,S,L,M,V) and col idx indicates second category
         % e.g. bigrams(3,2) corresponds to bigram LS
 	bigrams = zeros(5,5);
 

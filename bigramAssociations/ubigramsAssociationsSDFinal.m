@@ -70,6 +70,7 @@ for j=6:size(bigrams,2) % baseline
 			[B,BINT,R,RINT,STATS] = regress(data.bmi11, [double(indVar)/7 sumOther double(data.mCPM) double(confounders) repmat(1,size(data.bmi11, 1), 1)]);
 		end
 
+		% we only use the baseline-comparison results with SD of baseline < SD of comparison, otherwise SD change of baseline is infeasible for respective change in comparison
 		if (baselineBigramSD<=comparisonBigramSD)
 			B = B*baselineBigramSD; BINT = BINT*baselineBigramSD;
 
@@ -91,6 +92,7 @@ for j=6:size(bigrams,2) % baseline
 	set(h,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)]);
 	saveas(h, strcat('../out/figure-ubigram-assoc-SD', num2str(j),'.pdf'));
 
+	% not last bigram so start new figure for next baseline
 	if (j<size(bigrams,2))
 		if (j==size(bigrams,2)-1) % last new figure
 			labelsx = myVarNames(6:size(bigrams,2));

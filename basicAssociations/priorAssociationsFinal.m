@@ -52,8 +52,6 @@ for i=1:4
 		end
 	
 		sumOther = sum(double(otherUnigrams),2);
-		testx = double(sumOther) + double(indVar) + double(unigrams(:,i));
-%		fprintf('TEST %f\n', testx(1));
 
 		%%%%%%%%%%%%%%%%%% unadjusted
 
