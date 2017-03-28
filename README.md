@@ -23,7 +23,7 @@ module add apps/matlab-r2015a
 module add apps/stata14
 ```
 
-The code assumes there is a data folder in the parent directory of this git dir that contains the following structure and contents:
+The code assumes there is a data folder in the parent directory of this git directory that contains the following structure and contents:
 
 ```bash
 ../data
@@ -42,7 +42,7 @@ The code assumes there is a data folder in the parent directory of this git dir 
 `*.DAT` refers to all accelerometer data files from the Focus at age 11 ALSPAC clinic.
 
 The code outputs generated results files to the directory `out` in this directory.
-This needs to be made if it doesn't exist:
+This needs to be created if it doesn't exist:
 
 ```bash
 mkdir out
@@ -61,9 +61,10 @@ We perform the following preprocessing:
 	sh dat-file-preprocessing.sh
 	```
 2. Prepare the accelerometer data
- 2. Combine the accelerometer data into a single file
- 3. Recode sequences of >=60 consecutive zeros to missing (value -1)
- 4. Discretise activity levels to categories: sedentary=0, low=1, moderate=2, vigorous=3
+
+ 1. Combine the accelerometer data into a single file
+ 2. Recode sequences of >=60 consecutive zeros to missing (value -1)
+ 3. Discretise activity levels to categories: sedentary=0, low=1, moderate=2, vigorous=3
 
 ```bash 
 cd accelDataProcessing/
@@ -82,7 +83,7 @@ matlab -r plotPersonsAccelerometerData
 ALSPAC data is stored as Stata dta files. We process this to extract the required variables
 and do some basic processing to prepare variables, e.g. recoding as missing.
 
-This script creates a file called alspac-variables.csv in `../../data/derived/activityBigrams/alspac/`.
+This script creates a file called alspac-variables.csv in `../data/derived/activityBigrams/alspac/`.
 
 ```bash
 cd alspacDataProcessing/
@@ -97,7 +98,7 @@ The following variables are generated:
 1. mCPM: average counts per minute
 2. mSD: standard deviation of counts per minute
 3. countMissing, countSed, countLow, countMod, countVig: the frequency of each activity category
-4. activity bigrams: the frequency of each activity bigram
+4. Activity bigrams: the frequency of each activity bigram
 5. numValidDays: the number of valid days, defined as having at least 8 hours wear time (i.e. not recoded as missing)
 
 ```bash
@@ -107,9 +108,9 @@ qsub j-gen-vars.sh
 
 ## 3) Combine these with other traits from ALSPAC (i.e. BMI and confounding factors)
 
-Make a single dataset with our derived PA variables, and other ALSPAC variables that we need for our analysis.
+We make a single dataset with our derived PA variables, and other ALSPAC variables that we need for our analysis.
 
-The file that's created in the data folder is called main-dataset.csv
+The file that's created in `../../data/derived/activityBigrams/` is called `main-dataset.csv`.
 
 ```bash
 cd generateActivityVariables/
@@ -139,7 +140,7 @@ Results are output to `confounder-assoc.log`.
 
 Runs tests of association of unigrams (sedentary, low, moderate, vigorous categories) on BMI. See paper for analysis details.
 
-Results are stored in unigram-assoc.csv and as a figure (figure-unigram-assoc.pdf).
+Results are stored in `unigram-assoc.csv` and as a figure (`figure-unigram-assoc.pdf`).
 
 
 ```bash
@@ -151,7 +152,7 @@ matlab -r priorAssociationsFinal
 
 Runs tests of association of mCPM and mSD with BMI. See paper for analysis details.
 
-Results are stored in mCPM-sdCPM-assoc.csv and as a figure (figure-mCPM-sdCPM.pdf).
+Results are stored in `mCPM-sdCPM-assoc.csv` and as a figure (`figure-mCPM-sdCPM.pdf`).
 
 ```bash
 cd basicAssociations/
@@ -162,7 +163,7 @@ matlab -r associationsmCPM
 
 Runs tests of association of bigrams with BMI. See paper for analysis details.
 
-Results	are stored in bigram-assoc.csv and one figure for the results with each bigram as the baseline (figure-bigram-assoc*.pdf).
+Results	are stored in `bigram-assoc.csv` and one figure for the results with each bigram as the baseline (`figure-bigram-assoc*.pdf`).
 
 ```bash
 cd bigramAssociations/
@@ -173,7 +174,7 @@ matlab -r bigramAssociationsFinal
 
 Runs tests of association of u-bigrams with BMI. See paper for analysis details.
 
-Results are stored in ubigram-assoc.csv and one figure for the results with each u-bigram as the baseline (figure-ubigram-assoc*.pdf).
+Results are stored in `ubigram-assoc.csv` and one figure for the results with each u-bigram as the baseline (`figure-ubigram-assoc*.pdf`).
 
 ```bash
 cd bigramAssociations/
@@ -189,7 +190,7 @@ cd bigramAssociations/
 matlab -r ubigramsAssociationsSDFinal
 ```
 
-Results are stored in ubigram-assoc-SD.csv and one figure for the results with each u-bigram as the baseline (figure-ubigram-assoc-SD*.pdf).
+Results are stored in `ubigram-assoc-SD.csv` and one figure for the results with each u-bigram as the baseline (`figure-ubigram-assoc-SD*.pdf`).
 
 
 ## 9) Plot bigram distibutions (histograms)
@@ -242,7 +243,7 @@ cd bigramAssociations/
 matlab -r bigramAssociationsFinalValidDaysOnly
 ```
 
-Results are stored in bigram-assocValidDaysOnly.csv and one figure for the results with each bigram as the baseline (figure-bigram-assoc*-ValidDaysOnly.pdf).
+Results are stored in `bigram-assocValidDaysOnly.csv` and one figure for the results with each bigram as the baseline (`figure-bigram-assoc*-ValidDaysOnly.pdf`).
 
 Test associations of ubigrams with BMI:
 ```bash
@@ -250,7 +251,7 @@ cd bigramAssociations/
 matlab -r ubigramAssociationsFinalValidDaysOnly
 ```
 
-Results are stored in ubigram-assocValidDaysOnly.csv and one figure for the results with each bigram as the baseline (figure-ubigram-assoc*-ValidDaysOnly.pdf).
+Results are stored in `ubigram-assocValidDaysOnly.csv` and one figure for the results with each bigram as the baseline (`figure-ubigram-assoc*-ValidDaysOnly.pdf`).
 
 
 
