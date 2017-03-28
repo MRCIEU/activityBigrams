@@ -117,7 +117,7 @@ cd generateActivityVariables/
 matlab -r combineDatasets
 ```
 
-## 4) Tests of confounding factors for those in sample vs those not in sample
+## 4) Tests of confounding factors for those in sample versus those not in sample
 
 We create a dataset to perform the confounder analysis. This is different from the main dataset because it
 contains all the participants that came to the F11 clinic, with an indicator variable `insample` denoting
