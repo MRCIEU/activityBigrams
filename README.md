@@ -61,10 +61,9 @@ We perform the following preprocessing:
 	sh dat-file-preprocessing.sh
 	```
 2. Prepare the accelerometer data
-
- 1. Combine the accelerometer data into a single file
- 2. Recode sequences of >=60 consecutive zeros to missing (value -1)
- 3. Discretise activity levels to categories: sedentary=0, low=1, moderate=2, vigorous=3
+  1. Combine the accelerometer data into a single file
+  2. Recode sequences of >=60 consecutive zeros to missing (value -1)
+  3. Discretise activity levels to categories: sedentary=0, low=1, moderate=2, vigorous=3
 
 ```bash 
 cd accelDataProcessing/
