@@ -56,20 +56,20 @@ We perform the following preprocessing:
 
 1. Remove the header of the accelerometer data files
 
- ```bash
- cd accelDataProcessing/
- sh dat-file-preprocessing.sh
- ```
+    ```bash
+    cd accelDataProcessing/
+    sh dat-file-preprocessing.sh
+    ```
 
 2. Prepare the accelerometer data
-  1. Combine the accelerometer data into a single file
-  2. Recode sequences of >=60 consecutive zeros to missing (value -1)
-  3. Discretise activity levels to categories: sedentary=0, low=1, moderate=2, vigorous=3
+    1. Combine the accelerometer data into a single file
+    2. Recode sequences of >=60 consecutive zeros to missing (value -1)
+    3. Discretise activity levels to categories: sedentary=0, low=1, moderate=2, vigorous=3
 
-```bash 
-cd accelDataProcessing/
-matlab -r combineParticipantsRecodeMissing
-```
+    ```bash 
+    cd accelDataProcessing/
+    matlab -r combineParticipantsRecodeMissing
+    ```
 
 Optional: plot a participant's discretised sequence:
 
