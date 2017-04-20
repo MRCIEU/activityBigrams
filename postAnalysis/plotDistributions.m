@@ -36,7 +36,7 @@ for i=1:size(bigrams,2)
 	liqr=bx(round(n/4));
 	hiqr=bx(round(3*n/4)); 
 	m = median(b);
-	fprintf(fileID, '%s \t%.3f \t(%.3f, %.3f) \n', labels{i}, m, liqr, hiqr); 
+	fprintf(fileID, '%s \t%.2f \t(%.2f, %.2f) \n', labels{i}, m, liqr, hiqr); 
 end
 fclose(fileID);
 
